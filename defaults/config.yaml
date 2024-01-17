@@ -1,0 +1,5 @@
+i3-config: ~/.config/i3/config
+polybar-config: ~/.config/polybar/config
+xresources: ~/.Xresources/.Xresources
+nitrogen-config: /home/USER/.config/nitrogen/bg-saved.cfg
+wallpaper-path: ~/i3wm-themes/wallpapers/001.png
