@@ -1,37 +1,66 @@
-# Div-config-files
-config files for stuff
+# Developer workflow environment
+This is a guide for myself for when I set up a new system (or bork the one I have)
 
-How to setup environment for ubuntu:
+Step 1.
 
-First you'll obviously have to install latest ubuntu version
+What distro to choose? 
 
-Then, since audio is nice, you'll install 
+Debian (stable for work, upgrade to testing at home or if in dependancy hell): https://www.debian.org/distrib/
 
-Pulseaudio and pavucontrol (might already be there, try launching first)
+Arch was nice to run because of the rolling releases, but sadly not viable due to some proprietary software necessary for work that doesn't support it.
 
-Then you'll install i3 and customize for tile window management:
+Desktop environment: 
 
-(download the config file here first and see if it looks OK. If it, refer to the link below for guidance on customization)
-https://itsfoss.com/i3-customization/
+KDE Plasma (get that GNOME out of my face). It's nice to have a desktop environment when you have to deal with Teams, screensharing and other things that don't play well with a tiling window manager.
 
-(download the config file here first and see if it looks OK. If it doesn't, refer to the link below for guidance on customization)
-Then i3lock-color to customize the lock screen
+Tiling window manager for max productivity:
 
-https://github.com/Raymo111/i3lock-color
+Awesome: https://awesomewm.org/
 
-Then polybar to create a status bar and customize it
-(download the config and customize from that if necessary)
+Themes for awesome: https://github.com/Relz/awesome-wm-theme and https://github.com/lcpz/awesome-copycats 
 
-Using the config files for i3, polybar etc should get you up and running, but you may need some dependencies and a refresh on how to customize so
-refer to Kthulhu120/i3wm-theme repo and look at the manual guide there for how to customize your colors. Please for all that is unholy, don't try to run the scripts, it will result in you having to reinstall ubuntu.
+Previously ran i3. This required a lot of configuring and tinkering. Awesome on the other hand runs out of the box and feels easier to deal with.
 
+Locking the screen: https://askubuntu.com/questions/1070657/awesome-wm-how-do-you-set-a-hotkey-to-lock-your-system
 
-Then it's time to install lazyvim, which has a bunch of dependencies
+Text editor/IDE:
 
-https://www.lazyvim.org/
+VScode (with vim motions): Nice to have when you don't feel like being a keyboard wizard, need to pair program with a colleague or you've borked your Neovim doing something stupid.
 
-The main ones are a nerd font, Luajit, lazygit and kitty.
+Neovim:
 
-Luajit info here: file:///home/magnus/luajit/doc/luajit.html
+Lazyvim (because I'm lazy): https://www.lazyvim.org/
 
-Then it's a good time to replace the default config files for your own. The necessary config files are in this repo.
+Dependencies:
+
+Nerdfonts: https://www.nerdfonts.com/
+
+Luajit: http://luajit.org/
+
+Kitty terminal: https://sw.kovidgoyal.net/kitty/
+
+Kitty themes: https://github.com/dexpota/kitty-themes
+
+CLI tools:
+
+Lazygit: https://github.com/jesseduffield/lazygit
+
+What-cmd: https://github.com/OpusMag/what-cmd
+
+Thefuck: https://github.com/nvbn/thefuck
+
+Zoxide: https://github.com/ajeetdsouza/zoxide
+
+Tldr: https://github.com/tldr-pages/tldr
+
+Exa: https://github.com/ogham/exa
+
+Bat: https://github.com/sharkdp/bat
+
+Diff-so-fancy: https://github.com/so-fancy/diff-so-fancy
+
+Fzf: https://github.com/junegunn/fzf
+
+Procs: https://github.com/dalance/procs
+
+Now there are a thousand small steps inbetween these big ones and a lot of dependencies not mentioned, but they'll become apparant when walking through the steps. At this point, replacing the config files with the ones in this repo is the last step. After that, the system should be pretty much ready to go.
