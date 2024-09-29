@@ -11,7 +11,7 @@ Arch was nice to run because of the rolling releases, but sadly not viable due t
 
 Desktop environment: 
 
-KDE Plasma (get that GNOME out of my face). It's nice to have a desktop environment when you have to deal with Teams, screensharing and other things that don't play well with a tiling window manager.
+GNOME if I don't feel like customizing or KDE Plasma if I want to get everything just right. It's nice to have a desktop environment when you have to deal with Teams, screensharing and other things that don't play well with a tiling window manager.
 
 Tiling window manager for max productivity:
 
@@ -56,8 +56,6 @@ Tldr: https://github.com/tldr-pages/tldr
 Exa: https://github.com/ogham/exa
 
 Bat: https://github.com/sharkdp/bat
-
-Diff-so-fancy: https://github.com/so-fancy/diff-so-fancy
 
 Fzf: https://github.com/junegunn/fzf
 
