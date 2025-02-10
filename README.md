@@ -43,6 +43,8 @@ Kitty themes: https://github.com/dexpota/kitty-themes
 
 CLI tools:
 
+GNU Stow: https://www.gnu.org/software/stow/
+
 Lazygit: https://github.com/jesseduffield/lazygit
 
 What-cmd: https://github.com/OpusMag/what-cmd
