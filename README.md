@@ -13,6 +13,8 @@ Desktop environment:
 
 GNOME if I don't feel like customizing or KDE Plasma if I want to get everything just right. It's nice to have a desktop environment when you have to deal with Teams, screensharing and other things that don't play well with a tiling window manager.
 
+Installing dotfiles and packages: GNU stow is used to manage dotfiles and allow for easy redeployment of a system. In addition a list of packages is available in the repo in order to easily reinstall all the packages. in order to install the packages use  'sudo dpkg --set-selections < ~/package-list.txt' and 'sudo apt install dselect-upgrade' and the packages should be installed.
+
 Tiling window manager for max productivity:
 
 Awesome: https://awesomewm.org/
