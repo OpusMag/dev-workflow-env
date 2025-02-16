@@ -21,6 +21,8 @@ TODO: Describe the setup and stow-scripts. What they do, how they work and how t
 
 TODO: Consider switching to chezmoi
 
+TODO: Setup the QMK vim keybinds correctly.
+
 Tiling window manager for max productivity:
 
 Awesome: https://awesomewm.org/
