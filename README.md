@@ -19,6 +19,8 @@ TODO: Look further into streamlining this process more, so it's easier when sett
 
 TODO: Describe the setup and stow-scripts. What they do, how they work and how to use them.
 
+TODO: Consider switching to chezmoi
+
 Tiling window manager for max productivity:
 
 Awesome: https://awesomewm.org/
