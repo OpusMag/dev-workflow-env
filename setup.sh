@@ -21,7 +21,7 @@ xargs -a package-list.txt sudo apt install -y
 DOTFILES_REPO="https://github.com/OpusMag/dev-workflow-env.git"
 DOTFILES_DIR="$HOME/dev-workflow-env/dotfiles"
 
-# Running an install script to 
+# Running an install script so i don't have to deal with stowing
 if [ ! -d "$DOTFILES_DIR" ]; then
     echo "Cloning dotfiles repository..."
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
