@@ -4,12 +4,11 @@
 set -e
 
 # Need to update the sources list so we can get Deb testing
-echo "Updating sources list to Debian testing..."
+echo "Updating sources list to Debian testing"
 sudo sed -i 's/stable/testing/g' /etc/apt/sources.list
-sudo sed -i 's/bullseye/bookworm/g' /etc/apt/sources.list
 
 # Upgrading to debian testing to get newer packages
-echo "Updating system to debian testing..."
+echo "Upgrading system to debian testing"
 sudo apt update && sudo apt full-upgrade -y # it fails unless it's a full upgrade
 
 # Getting packages from another file because the list is looong
