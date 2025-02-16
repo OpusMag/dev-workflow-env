@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Exit immediately if a command fails
+# An exit if something fails
 set -e
 
 # Need to update the sources list so we can get Deb testing
@@ -26,7 +26,7 @@ if [ ! -d "$DOTFILES_DIR" ]; then
     echo "Cloning dotfiles repository..."
     git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
     cd "$DOTFILES_DIR"
-    ./install.sh
+    ./stow.sh
 fi
 
 # TODO: Setup neovim config
