@@ -17,6 +17,8 @@ Installing dotfiles and packages: GNU stow is used to manage dotfiles and allow 
 
 TODO: Look further into streamlining this process more, so it's easier when setting up a new system.
 
+TODO: Describe the setup and stow-scripts. What they do, how they work and how to use them.
+
 Tiling window manager for max productivity:
 
 Awesome: https://awesomewm.org/
