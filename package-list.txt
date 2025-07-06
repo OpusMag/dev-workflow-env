@@ -333,6 +333,7 @@ gnome-shell
 gnome-shell-common
 gnome-shell-extension-prefs
 gnome-shell-extensions
+gnome-shell-extensions-auto-move-windows
 gnome-snapshot
 gnome-software
 gnome-software-common

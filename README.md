@@ -29,8 +29,7 @@ TODO: Setup the QMK vim keybinds correctly.
 
 Tiling window manager for max productivity:
 
-Easy alternative: Use Mutter that's built-in to Gnome. Customize it with Gnome Tweaks and use devilspie2 to move applications to correct workspace on startup. 
-TODO: Describe how to set it up.
+Easy alternative: Use Mutter that's built-in to Gnome. Customize it with Gnome Tweaks and use gnome-shell-extension-auto-move-windows to move applications to workspaces.
 
 Awesome: https://awesomewm.org/
 
