@@ -13,6 +13,8 @@ Desktop environment:
 
 GNOME if I don't feel like customizing or KDE Plasma if I want to get everything just right. It's nice to have a desktop environment when you have to deal with Teams, screensharing and other things that don't play well with a tiling window manager. Need to install dconf-cli in order to import gnome settings. Use dconf load < gnome-settings.ini and the settings should be loaded.
 
+Install Gnome Tweaks to tweak gnome.
+
 Installing dotfiles and packages: GNU stow is used to manage dotfiles and allow for easy redeployment of a system. In addition a list of packages is available in the repo in order to easily reinstall all the packages. in order to install the packages use  'sudo dpkg --set-selections < ~/package-list.txt' and 'sudo apt install dselect-upgrade' and the packages should be installed. This may not work correctly, so just look at the list of packages and get the most essential ones manually. Stow might also not work. In that case, just copy over the config files to the correct directories. In addition, lazyvim, lazygit, vscode, discord and vmware need to be installed manually.
 
 TODO: Test the setup.
@@ -26,6 +28,9 @@ TODO: Consider switching to chezmoi
 TODO: Setup the QMK vim keybinds correctly.
 
 Tiling window manager for max productivity:
+
+Easy alternative: Use Mutter that's built-in to Gnome. Customize it with Gnome Tweaks and use devilspie2 to move applications to correct workspace on startup. 
+TODO: Describe how to set it up.
 
 Awesome: https://awesomewm.org/
 

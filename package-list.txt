@@ -117,6 +117,7 @@ debian-faq
 debianutils
 desktop-base
 desktop-file-utils
+devilspie2
 dictionaries-common
 diffutils
 dirmngr
