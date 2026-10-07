@@ -26,7 +26,7 @@ Stow stops if a destination already exists and is not the expected symlink. Back
 - Lazygit is installed as a package, but its empty config and machine-specific state are not managed here.
 - `dotfiles/gnome/dconf-settings.ini`: optional GNOME settings snapshot; not installed by Stow or the setup script.
 - `backgrounds/`: wallpapers used by the desktop configuration.
-- `dev-layout-Q8-Pro.json` and `vim-keybinds.json`: keyboard exports, not installed or modified by these scripts.
+- `keybinds/`: keyboard layout exports and a Neovim command reference; these files are not installed or modified by the setup scripts.
 - `.config/`: convenience symlinks into the canonical Stow packages; edit the files under `dotfiles/`.
 
 ## Optional GNOME Settings
