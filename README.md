@@ -1,82 +1,53 @@
-# Developer workflow environment
-This is a guide for myself for when I set up a new system (or bork the one I have)
+# Debian Developer Environment
 
-Step 1.
+This repository collects the packages and user configuration I use on a new Debian workstation. The supported baseline is Debian stable. The installer does not change APT sources, upgrade the release, configure third-party repositories, or import desktop settings automatically.
 
-What distro to choose? 
+## Install
 
-Debian (stable for work, upgrade to testing at home or if in dependancy hell): https://www.debian.org/distrib/
+Clone the repository, review the package manifest, and run the installer:
 
-Arch was nice to run because of the rolling releases, but sadly not viable due to some proprietary software necessary for work that doesn't support it.
+```sh
+git clone https://github.com/OpusMag/dev-workflow-env.git
+cd dev-workflow-env
+bash setup.sh --dry-run
+bash setup.sh
+```
 
-Desktop environment: 
+The dry run lists the packages and Stow operation without changing the system. The normal run updates APT, installs the packages in `packages/debian.txt`, then uses GNU Stow to link the Bash, Kitty, Lazygit, and Neovim configurations into your home directory. Run it from any working directory; paths are resolved relative to the script.
 
-GNOME if I don't feel like customizing or KDE Plasma if I want to get everything just right. It's nice to have a desktop environment when you have to deal with Teams, screensharing and other things that don't play well with a tiling window manager. Need to install dconf-cli in order to import gnome settings. Use dconf load < gnome-settings.ini and the settings should be loaded.
+Stow stops if a destination already exists and is not the expected symlink. Back up or move conflicting files before retrying; the installer does not delete or replace existing configuration. The package list is a curated baseline, not a complete export of every package on a particular machine. Package availability can change between Debian releases.
 
-Install Gnome Tweaks to tweak gnome.
+## Repository Layout
 
-Installing dotfiles and packages: GNU stow is used to manage dotfiles and allow for easy redeployment of a system. In addition a list of packages is available in the repo in order to easily reinstall all the packages. in order to install the packages use  'sudo dpkg --set-selections < ~/package-list.txt' and 'sudo apt install dselect-upgrade' and the packages should be installed. This may not work correctly, so just look at the list of packages and get the most essential ones manually. Stow might also not work. In that case, just copy over the config files to the correct directories. In addition, lazyvim, lazygit, vscode, discord and vmware need to be installed manually.
+- `packages/debian.txt`: Debian package names, one per line; comments and blank lines are ignored.
+- `setup.sh`: Debian check, package installation, and call to the Stow script.
+- `dotfiles/stow.sh`: links the selected Stow packages into `$HOME`.
+- `dotfiles/bash/`, `dotfiles/kitty/`, `dotfiles/lazygit/`, `dotfiles/nvim/`: canonical user configuration sources.
+- `dotfiles/gnome/dconf-settings.ini`: optional GNOME settings snapshot; not installed by Stow or the setup script.
+- `backgrounds/`: wallpapers used by the desktop configuration.
+- `dev-layout-Q8-Pro.json` and `vim-keybinds.json`: keyboard exports, separate from the Debian setup.
+- `.config/`: convenience symlinks into the canonical Stow packages; edit the files under `dotfiles/`.
 
-TODO: Test the setup.
+## Optional GNOME Settings
 
-TODO: Look further into streamlining this process more, so it's easier when setting up a new system. Got a bit of the way there with the setup and stow scripts. But this needs to be tested. Is there anything else that can be automated?
+The dconf file is a snapshot from one Ubuntu desktop. It contains user-specific paths, Ubuntu schemas, and theme names that may not exist on Debian. Review and adjust it before importing it from a running GNOME session:
 
-TODO: Describe the setup and stow-scripts. What they do, how they work and how to use them.
+```sh
+dconf load / < dotfiles/gnome/dconf-settings.ini
+```
 
-TODO: Consider switching to chezmoi
+Importing the snapshot changes settings across multiple GNOME applications. It is not a portable default profile and is intentionally excluded from the unattended install.
 
-TODO: Setup the QMK vim keybinds correctly.
+## Manual Applications
 
-Tiling window manager for max productivity:
+Applications that need vendor repositories or separate installers are not included in the Debian package manifest. Install VS Code, Discord, VMware, and any preferred Nerd Font using their upstream instructions. LazyVim plugins install on the first Neovim launch; the repository includes the Neovim configuration, not a separate Neovim binary installer.
 
-Easy alternative: Use Mutter that's built-in to Gnome. Customize it with Gnome Tweaks and use gnome-shell-extension-auto-move-windows to move applications to workspaces.
+Some tools named in older notes (such as `what-cmd`, `thefuck`, and `tldr`) are not part of the curated Debian package set. Add them only after checking their current Debian availability and installation method.
 
-Awesome: https://awesomewm.org/
+## Dotfile Manager
 
-Themes for awesome: https://github.com/Relz/awesome-wm-theme and https://github.com/lcpz/awesome-copycats 
+This repository uses GNU Stow because the maintained configuration is static and already organized as Stow packages. A second manager would add migration work without solving a current need. Revisit that choice if configurations need host-specific templates, encrypted secrets, or managed machine-to-machine state.
 
-Previously ran i3. This required a lot of configuring and tinkering. Awesome on the other hand runs out of the box and feels easier to deal with.
+## Maintenance
 
-Locking the screen: https://askubuntu.com/questions/1070657/awesome-wm-how-do-you-set-a-hotkey-to-lock-your-system
-
-Text editor/IDE:
-
-VScode (with vim motions): Nice to have when you don't feel like being a keyboard wizard, need to pair program with a colleague or you've borked your Neovim doing something stupid.
-
-Neovim:
-
-Lazyvim (because I'm lazy): https://www.lazyvim.org/
-
-Dependencies:
-
-Nerdfonts: https://www.nerdfonts.com/
-
-Luajit: http://luajit.org/
-
-Kitty terminal: https://sw.kovidgoyal.net/kitty/
-
-Kitty themes: https://github.com/dexpota/kitty-themes
-
-CLI tools:
-
-GNU Stow: https://www.gnu.org/software/stow/
-
-Lazygit: https://github.com/jesseduffield/lazygit
-
-What-cmd: https://github.com/OpusMag/what-cmd
-
-Thefuck: https://github.com/nvbn/thefuck
-
-Zoxide: https://github.com/ajeetdsouza/zoxide
-
-Tldr: https://github.com/tldr-pages/tldr
-
-Exa: https://github.com/ogham/exa
-
-Bat: https://github.com/sharkdp/bat
-
-Fzf: https://github.com/junegunn/fzf
-
-Procs: https://github.com/dalance/procs
-
-Now there are a thousand small steps inbetween these big ones and a lot of dependencies not mentioned, but they'll become apparant when walking through the steps. At this point, replacing the config files with the ones in this repo is the last step. After that, the system should be pretty much ready to go.
+Keep one maintained copy of each user configuration under `dotfiles/` and update `packages/debian.txt` when the baseline changes. Test installer changes with `bash setup.sh --dry-run`; test actual package and Stow behavior in a disposable Debian VM before relying on a fresh-system install.

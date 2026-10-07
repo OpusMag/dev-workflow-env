@@ -1,41 +1,54 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-# An exit if something fails
-set -e
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PACKAGE_FILE="$SCRIPT_DIR/packages/debian.txt"
+DRY_RUN=0
 
-# Need to update the sources list so we can get Deb testing
-echo "Updating sources list to Debian testing"
-sudo sed -i 's/stable/testing/g' /etc/apt/sources.list
-
-# Upgrading to debian testing to get newer packages
-echo "Upgrading system to debian testing"
-sudo apt update && sudo apt full-upgrade -y # it fails unless it's a full upgrade
-
-# Getting packages from another file because the list is looong
-echo "Installing additional packages..."
-xargs -a package-list.txt sudo apt install -y
-
-echo "Setting up Git"
-read -p "Enter your Git user name: " git_user_name
-read -p "Enter your Git email: " git_user_email
-git config --global user.name "$git_user_name"
-git config --global user.email "$git_user_email"
-git config --global core.editor "nvim"
-git config --global init.defaultBranch main
-
-DOTFILES_REPO="https://github.com/OpusMag/dev-workflow-env.git"
-DOTFILES_DIR="$HOME/dev-workflow-env/dotfiles"
-
-# Running an install script so i don't have to deal with stowing
-if [ ! -d "$DOTFILES_DIR" ]; then
-    echo "Cloning dotfiles repository"
-    git clone "$DOTFILES_REPO" "$DOTFILES_DIR"
-    cd "$DOTFILES_DIR"
-    ./stow.sh
+if [[ "${1:-}" == "--dry-run" && $# -eq 1 ]]; then
+    DRY_RUN=1
+elif [[ $# -gt 0 ]]; then
+    printf 'Usage: %s [--dry-run]\n' "$0" >&2
+    exit 2
 fi
 
-# Need to reload shell for changes to take effect
-echo "Reloading shell configuration"
-source ~/.bashrc
+if [[ ! -r /etc/os-release ]]; then
+    echo "Cannot identify this operating system (/etc/os-release is missing)." >&2
+    exit 1
+fi
 
-echo "Setup complete! Please reboot for changes to take effect."
+. /etc/os-release
+if [[ "${ID:-}" != "debian" ]]; then
+    printf 'This installer supports Debian only; detected %s.\n' "${PRETTY_NAME:-unknown}" >&2
+    exit 1
+fi
+
+if [[ ! -r "$PACKAGE_FILE" ]]; then
+    printf 'Package manifest not found: %s\n' "$PACKAGE_FILE" >&2
+    exit 1
+fi
+
+packages=()
+while IFS= read -r package || [[ -n "$package" ]]; do
+    [[ "$package" =~ ^[[:space:]]*($|#) ]] && continue
+    packages+=("$package")
+done < "$PACKAGE_FILE"
+
+if [[ ${#packages[@]} -eq 0 ]]; then
+    echo "The Debian package manifest is empty." >&2
+    exit 1
+fi
+
+if (( DRY_RUN )); then
+    printf 'Would run: sudo apt-get update\n'
+    printf 'Would install: sudo apt-get install --yes'
+    printf ' %q' "${packages[@]}"
+    printf '\nWould run: bash %q\n' "$SCRIPT_DIR/dotfiles/stow.sh"
+    exit 0
+fi
+
+sudo apt-get update
+sudo apt-get install --yes --no-install-recommends "${packages[@]}"
+bash "$SCRIPT_DIR/dotfiles/stow.sh"
+
+echo "Setup complete. Start a new shell session to load the Bash configuration."

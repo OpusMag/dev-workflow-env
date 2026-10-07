@@ -1,0 +1,22 @@
+# Debian stable packages for the core developer environment.
+# One package name per line; blank lines and comments are ignored.
+build-essential
+ca-certificates
+curl
+dconf-cli
+fd-find
+fonts-noto-color-emoji
+fzf
+git
+gnome-tweaks
+kitty
+lazygit
+luajit
+neovim
+ripgrep
+stow
+zoxide
+bat
+eza
+procs
+awesome
