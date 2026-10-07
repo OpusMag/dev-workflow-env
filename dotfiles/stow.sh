@@ -2,7 +2,7 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-STOW_DIRS=(bash kitty lazygit nvim)
+STOW_DIRS=(bash kitty nvim)
 STOW_ARGS=()
 
 if [[ "${1:-}" == "--dry-run" && $# -eq 1 ]]; then

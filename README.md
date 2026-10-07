@@ -13,19 +13,20 @@ bash setup.sh --dry-run
 bash setup.sh
 ```
 
-The dry run lists the packages and Stow operation without changing the system. The normal run updates APT, installs the packages in `packages/debian.txt`, then uses GNU Stow to link the Bash, Kitty, Lazygit, and Neovim configurations into your home directory. Run it from any working directory; paths are resolved relative to the script.
+The dry run lists the packages and Stow operation without changing the system. The normal run updates APT, installs the packages in `packages/debian.txt`, then uses GNU Stow to link the Bash aliases, Kitty, and Neovim configurations into your home directory. Bash customizations are installed as `~/.bash_aliases`, which the standard Debian `~/.bashrc` sources; the installer does not replace your existing `~/.bashrc`. Run it from any working directory; paths are resolved relative to the script.
 
-Stow stops if a destination already exists and is not the expected symlink. Back up or move conflicting files before retrying; the installer does not delete or replace existing configuration. The package list is a curated baseline, not a complete export of every package on a particular machine. Package availability can change between Debian releases.
+Stow stops if a destination already exists and is not the expected symlink. Back up or move conflicting files before retrying; the installer does not delete or replace existing configuration. If you already maintain `~/.bash_aliases`, merge it with `dotfiles/bash/.bash_aliases` before stowing the Bash package. The package list is a curated baseline, not a complete export of every package on a particular machine. Package availability can change between Debian releases.
 
 ## Repository Layout
 
 - `packages/debian.txt`: Debian package names, one per line; comments and blank lines are ignored.
 - `setup.sh`: Debian check, package installation, and call to the Stow script.
 - `dotfiles/stow.sh`: links the selected Stow packages into `$HOME`.
-- `dotfiles/bash/`, `dotfiles/kitty/`, `dotfiles/lazygit/`, `dotfiles/nvim/`: canonical user configuration sources.
+- `dotfiles/bash/`, `dotfiles/kitty/`, `dotfiles/nvim/`: canonical user configuration sources; Bash provides additive aliases rather than a replacement `.bashrc`.
+- Lazygit is installed as a package, but its empty config and machine-specific state are not managed here.
 - `dotfiles/gnome/dconf-settings.ini`: optional GNOME settings snapshot; not installed by Stow or the setup script.
 - `backgrounds/`: wallpapers used by the desktop configuration.
-- `dev-layout-Q8-Pro.json` and `vim-keybinds.json`: keyboard exports, separate from the Debian setup.
+- `dev-layout-Q8-Pro.json` and `vim-keybinds.json`: keyboard exports, not installed or modified by these scripts.
 - `.config/`: convenience symlinks into the canonical Stow packages; edit the files under `dotfiles/`.
 
 ## Optional GNOME Settings
@@ -50,4 +51,18 @@ This repository uses GNU Stow because the maintained configuration is static and
 
 ## Maintenance
 
-Keep one maintained copy of each user configuration under `dotfiles/` and update `packages/debian.txt` when the baseline changes. Test installer changes with `bash setup.sh --dry-run`; test actual package and Stow behavior in a disposable Debian VM before relying on a fresh-system install.
+Keep one maintained copy of each user configuration under `dotfiles/` and update `packages/debian.txt` when the baseline changes. Check the package plan with `bash setup.sh --dry-run` and the Stow plan with `bash dotfiles/stow.sh --dry-run`.
+
+To test real Stow links without changing your home directory, use a temporary target:
+
+```sh
+temp_home=$(mktemp -d)
+trap 'rm -rf "$temp_home"' EXIT
+HOME="$temp_home" bash dotfiles/stow.sh
+test -L "$temp_home/.bash_aliases"
+test -L "$temp_home/.config/kitty/kitty.conf"
+test -L "$temp_home/.config/kitty/theme.conf"
+test -L "$temp_home/.config/nvim/init.lua"
+```
+
+This verifies config linking, including Kitty's theme file, but does not install APT packages. The package installation has not been tested on a fresh Debian VM; do that before relying on this repository for a new-system setup.
